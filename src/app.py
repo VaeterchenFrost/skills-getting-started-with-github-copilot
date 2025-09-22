@@ -103,7 +103,30 @@ def signup_for_activity(activity_name: str, email: str):
 
     # Validate student is not already signed up
     if email in activity["participants"]:
-        raise HTTPException(status_code=400, detail="Student is already signed up")
+        raise HTTPException(
+            status_code=400, detail="Student is already signed up")
     # Add student
     activity["participants"].append(email)
     return {"message": f"Signed up {email} for {activity_name}"}
+
+
+# Remove a participant from an activity
+import re
+
+@app.delete("/activities/{activity_name}/signup")
+def remove_participant(activity_name: str, email: str):
+    """Remove a student from an activity"""
+    # Validate email presence
+    if not email or not email.strip():
+        raise HTTPException(status_code=400, detail="Email must not be empty")
+    # Validate email format
+    email_regex = r"^[\w\.-]+@[\w\.-]+\.\w+$"
+    if not re.match(email_regex, email):
+        raise HTTPException(status_code=400, detail="Invalid email format")
+    if activity_name not in activities:
+        raise HTTPException(status_code=404, detail="Activity not found")
+    activity = activities[activity_name]
+    if email not in activity["participants"]:
+        raise HTTPException(status_code=404, detail="Participant not found")
+    activity["participants"].remove(email)
+    return {"message": f"Removed {email} from {activity_name}"}
