@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
               alert(result.detail || 'Failed to remove participant.');
             }
           } catch (err) {
-            alert('Failed to remove participant.');
+            alert('Failed to remove participant. This may be due to a network issue or server error. Please try again.');
           }
         });
       });
