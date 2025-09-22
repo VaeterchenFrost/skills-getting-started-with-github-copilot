@@ -113,6 +113,13 @@ section h3 {
   font-size: 16px;
   transition: color 0.2s;
   user-select: none;
+  outline: none;
+}
+
+.delete-participant:focus {
+  outline: 2px solid #3949ab;
+  outline-offset: 2px;
+  background-color: #fce4ec;
 }
 
 .delete-participant:hover {

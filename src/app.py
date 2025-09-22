@@ -111,9 +111,18 @@ def signup_for_activity(activity_name: str, email: str):
 
 
 # Remove a participant from an activity
+import re
+
 @app.delete("/activities/{activity_name}/signup")
 def remove_participant(activity_name: str, email: str):
     """Remove a student from an activity"""
+    # Validate email presence
+    if not email or not email.strip():
+        raise HTTPException(status_code=400, detail="Email must not be empty")
+    # Validate email format
+    email_regex = r"^[\w\.-]+@[\w\.-]+\.\w+$"
+    if not re.match(email_regex, email):
+        raise HTTPException(status_code=400, detail="Invalid email format")
     if activity_name not in activities:
         raise HTTPException(status_code=404, detail="Activity not found")
     activity = activities[activity_name]
