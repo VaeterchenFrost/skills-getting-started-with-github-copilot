@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const spotsLeft = details.max_participants - details.participants.length;
 
-        // Teilnehmerliste als hübsche, formatierte Liste
+        // Participant list as a nicely formatted list
         let participantsHTML = "";
         if (details.participants && details.participants.length > 0) {
           participantsHTML = `
